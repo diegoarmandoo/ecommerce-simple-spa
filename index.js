@@ -26,6 +26,33 @@ function initListenerDOMContentLoaded(router) {
     });
 }
 
+function initListenerEventLogin(router) {
+    //Configurando a função ouvinte de evento customizado login para manipular navegação após feito o login
+    window.addEventListener("eventLogin", async (e) => {
+      var authLink = document.getElementById('authLink');
+
+      if (authLink) {
+        authLink.innerHTML  = ' <i id="iconAuthLink" class="bi bi-unlock"></i> Logout';
+        authLink.href = '/logout';
+        history.replaceState("", "", "/dashboard");
+        router.navigateTo('/dashboard');
+      }
+    });
+}
+
+function initListenerEventLogout(router) {
+    //Configurando a função ouvinte de evento customizado login para manipular navegação após feito o login
+    window.addEventListener("eventLogout", async (e) => {
+      var authLink = document.getElementById('authLink');
+      if (authLink) {
+        authLink.innerHTML  = ' <i id="iconAuthLink" class="bi bi-lock"></i> Login';
+        authLink.href = '/login';
+        history.replaceState("", "", "/");
+        router.navigateTo('/');
+      }
+    });
+}
+
 function bootstrap() {
 
     console.log('Inicializando a Front End (SPA)');
@@ -37,6 +64,10 @@ function bootstrap() {
     initListenerPopState(router);
 
     initListenerDOMContentLoaded(router);
+
+    initListenerEventLogin(router);
+
+    initListenerEventLogout(router);
 
 }
 
